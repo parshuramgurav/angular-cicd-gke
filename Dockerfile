@@ -3,7 +3,7 @@ FROM node:latest as build
 WORKDIR /usr/local/app
 COPY ./demo-app/ /usr/local/app/
 RUN npm install
-RUN sudo npm run build -- --output-path=./dist/demo-app
+RUN npm run build -- --output-path=./dist/demo-app
 #RUN npm run build -- --output-path=./dist/out --configuration $configuration
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
