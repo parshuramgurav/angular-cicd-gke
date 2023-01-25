@@ -1,5 +1,5 @@
 # Stage 0, "build-stage", based on Node.js, to build and compile the frontend
-FROM node:14.21.2 as build
+FROM node:latest as build
 WORKDIR /usr/local/app
 COPY ./demo-app/ /usr/local/app/
 RUN npm install
