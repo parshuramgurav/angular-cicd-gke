@@ -23,32 +23,5 @@ pipeline {
                 '''
             }
         }
-        
-        stage('Push auth and image') {
-            steps {
-                 sh 'gcloud auth configure-docker     asia-south1-docker.pkg.dev'
-                 sh 'docker push asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:latest' 
-                                 
-            }
-        }
-    
-        stage('Deploy to K8s') {
-            steps{
-                echo "Deployment started ..."
-                sh 'ls -ltr'
-                sh 'pwd'
-                step([$class: 'KubernetesEngineBuilder', \
-                  projectId: env.PROJECT_ID, \
-                  clusterName: env.CLUSTER_NAME, \
-                  location: env.LOCATION, \
-                  manifestPattern: 'deployment.yml', \
-                  credentialsId: env.CREDENTIALS_ID, \
-                  verifyDeployments: true])
-                }
-            }
-        }    
+    }
 }
-
-
-
-
