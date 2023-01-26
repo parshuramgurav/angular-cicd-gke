@@ -5,7 +5,7 @@ COPY ./demo-app/ /usr/local/app/
 RUN npm install
 #ARG configuration=production
 RUN npm run --silent build
-# RUN npm run build --yes
+RUN npm run build
 #RUN npm run build -- --output-path=./dist/out --configuration $configuration
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
