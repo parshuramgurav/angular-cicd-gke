@@ -3,7 +3,6 @@ pipeline {
     environment {
         PROJECT_ID = 'searce-playground-v1'
                 CLUSTER_NAME = 'moglix-test-cluster'
-                NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
                 LOCATION = 'asia-south1-a'
                 REGION = 'asia-south1'
                 REPONAME = 'moglix-test'
