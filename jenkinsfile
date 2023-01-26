@@ -25,7 +25,7 @@ pipeline {
         }
         stage('Push auth and image') {
             steps {
-                 sh 'gcloud auth configure-docker     asia-south1-docker.pkg.dev'
+                 sh 'gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet'
                  sh 'docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPONAME}/demo-angular:${env.BUILD_ID}' 
                                  
             }
