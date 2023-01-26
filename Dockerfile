@@ -9,6 +9,6 @@ RUN npm run build
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:latest
 #Copy ci-dashboard-dist
-COPY --from=build /usr/local/app/dist/demo-app /usr/share/nginx/html
+COPY --from=build /usr/local/app/dist/aangular-app /usr/share/nginx/html
 #Copy default nginx configuration
 #COPY ./nginx-custom.conf /etc/nginx/conf.d/default.conf
