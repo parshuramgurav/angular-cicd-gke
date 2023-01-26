@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: moglix-deployment
+  name: nginx-deployment
   labels:
-    app: moglix
+    app: nginx
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      app: moglix
+      app: nginx
   template:
     metadata:
       labels:
-        app: moglix
+        app: nginx
     spec:
       containers:
-      - name: my-app
-        image: asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:tagversion
+      - name: nginx
+        image: nginx:1.14.2
         ports:
-        - containerPort: 4200
+        - containerPort: 80
