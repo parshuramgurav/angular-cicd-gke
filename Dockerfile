@@ -4,7 +4,7 @@ WORKDIR /usr/local/app
 COPY ./demo-app/ /usr/local/app/
 RUN npm install
 #ARG configuration=production
-RUN npm run --silent build
+#RUN npm run --silent build
 RUN npm run build
 #RUN npm run build -- --output-path=./dist/out --configuration $configuration
 
