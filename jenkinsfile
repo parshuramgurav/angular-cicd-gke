@@ -19,14 +19,14 @@ pipeline {
             steps {
                 sh '''
                     whoami
-                    sudo docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPONAME/demo-angular:latest .
+                    sudo docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPONAME/demo-angular:${env.BUILD_ID} .
                 '''
             }
         }
         stage('Push auth and image') {
             steps {
                  sh 'gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet'
-                 sh 'docker push asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:latest' 
+                 sh 'docker push asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:${env.BUILD_ID}' 
                                  
             }
         }
