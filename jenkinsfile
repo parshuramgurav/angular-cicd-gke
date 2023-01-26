@@ -19,7 +19,7 @@ pipeline {
             steps {
                 sh '''
                     whoami
-                    sudo docker build -t asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:latest .
+                    sudo docker build -t testing-from-jenkins:latest .
                 '''
             }
         }
