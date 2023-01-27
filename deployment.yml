@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: moglix-deployment
+  name: my-moglix-deployment
 spec:
   replicas: 2
   selector:
@@ -24,7 +24,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: moglix-service
+  name: my-moglix-service
   labels:
     app: moglix
   annotations:
