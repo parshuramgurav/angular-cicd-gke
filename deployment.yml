@@ -15,6 +15,7 @@ spec:
       containers:
       - name: my-app
         image: asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:tagversion
+        imagePullPolicy: Always
         ports:
         - containerPort: 4200
         
