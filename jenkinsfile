@@ -34,6 +34,7 @@ pipeline {
         stage('Push auth and image') {
             steps {
                  sh 'gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet'
+                 sh 'gcloud config set project seismic-mantis-376309'
                  sh 'docker push asia-south1-docker.pkg.dev/$PROJECT_ID/$REPONAME/demo-angular:$BUILD_ID' 
                                  
             }
