@@ -44,8 +44,22 @@ pipeline {
                 sh 'ls -ltr'
                 sh 'pwd'
                 sh "sed -i 's/tagversion/$BUILD_ID/g' deployment.yml"
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+               
             }
+        stage ("getting the WIF config file into a variable")
+        {
+            steps {
+                     withCredentials([file(credentialsId: 'wif-config-file', variable: 'WIF')]) 
+                        {
+                         sh '''
+                            gcloud auth login --brief --cred-file=$WIF --quiet
+                            gcloud container clusters get-credentials monitoring-cluster --zone asia-south1-a --project seismic-mantis-376309
+                            kubectl apply -f deployment.yaml
+                            '''
+
+                        }
+                }
+        }    
 
         }
     }
