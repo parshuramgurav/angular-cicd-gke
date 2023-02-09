@@ -54,8 +54,7 @@ pipeline {
                         {
                          sh '''
                             gcloud auth login --brief --cred-file=$WIF --quiet
-                            gcloud container clusters get-credentials monitoring-cluster --zone asia-south1-a --project seismic-mantis-376309
-                            kubectl apply -f deployment.yaml
+                            gcloud container clusters list
                             '''
 
                         }
