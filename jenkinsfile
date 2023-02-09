@@ -1,12 +1,12 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'searce-playground-v1'
-                CLUSTER_NAME = 'moglix-test-cluster'
+        PROJECT_ID = 'seismic-mantis-376309'
+                CLUSTER_NAME = 'monitoring-cluster'
                 LOCATION = 'asia-south1-a'
                 REGION = 'asia-south1'
-                REPONAME = 'moglix-test'
-                CREDENTIALS_ID = 'kubernetes'
+                REPONAME = 'jenkinscicd'
+                CREDENTIALS_ID = 'wif-config-file'
     }
     
     stages {
@@ -34,7 +34,7 @@ pipeline {
         stage('Push auth and image') {
             steps {
                  sh 'gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet'
-                 sh 'docker push asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:$BUILD_ID' 
+                 sh 'docker push asia-south1-docker.pkg.dev/$PROJECT_ID/$REPONAME/demo-angular:$BUILD_ID' 
                                  
             }
         }
