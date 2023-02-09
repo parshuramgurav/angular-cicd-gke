@@ -10,6 +10,14 @@ pipeline {
     }
     
     stages {
+
+        stage("Generating OIDC token and saving it to a file") {
+            steps {
+                script {
+                        sh (script: 'gcloud auth print-identity-token serviceaccounttoken@seismic-mantis-376309.iam.gserviceaccount.com  --audiences="//iam.googleapis.com/projects/27633948451/locations/global/workloadIdentityPools/jenkinsid"  > /usr/share/token/key',returnStdout: true)
+                }
+            }
+        }
         stage('Checkout') {
             steps {
                 checkout scm
