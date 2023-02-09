@@ -46,6 +46,7 @@ pipeline {
                 sh "sed -i 's/tagversion/$BUILD_ID/g' deployment.yml"
                
             }
+        }
         stage ("getting the WIF config file into a variable")
         {
             steps {
@@ -60,7 +61,5 @@ pipeline {
                         }
                 }
         }    
-
-        }
     }
 }
