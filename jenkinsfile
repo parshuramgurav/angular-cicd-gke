@@ -32,6 +32,7 @@ pipeline {
                             whoami
                             sudo docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPONAME/demo-angular:$BUILD_ID .
                             gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet
+                            docker push asia-south1-docker.pkg.dev/flawless-helper-376817/testing/demo-angular:$BUILD_ID
                             '''
 
                         }
