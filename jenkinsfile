@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         PROJECT_ID = 'flawless-helper-376817'
-                CLUSTER_NAME = 'moglix-test-cluster'
+                CLUSTER_NAME = 'testing'
                 LOCATION = 'asia-south1-a'
                 REGION = 'asia-south1'
                 REPONAME = 'testing'
@@ -36,7 +36,7 @@ pipeline {
                             gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet
                             docker push asia-south1-docker.pkg.dev/flawless-helper-376817/testing/demo-angular:$BUILD_ID
                             '''
-
+                         step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])   
                         }
                 }
         }
