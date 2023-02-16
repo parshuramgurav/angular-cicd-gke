@@ -29,6 +29,7 @@ pipeline {
                          sh '''
                             gcloud auth login --brief --cred-file=$WIF --quiet
                             gcloud compute instances list
+                            gcloud artifacts docker images list
                             whoami
                             sudo docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPONAME/demo-angular:$BUILD_ID .
                             gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet
