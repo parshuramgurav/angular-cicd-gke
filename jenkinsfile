@@ -41,7 +41,7 @@ pipeline {
                             sed -i 's/tagversion/$BUILD_ID/g' deployment.yml
                             sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
                             export USE_GKE_GCLOUD_AUTH_PLUGIN=True
-                            gcloud container clusters get-credentials testing --zone asia-south1-a --region asia-south1-a --project flawless-helper-376817
+                            gcloud container clusters get-credentials testing --region asia-south1-a --project flawless-helper-376817
                             kubectl apply -f deployment.yml
                             '''
                         }
