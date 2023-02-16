@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: asia-south1-docker.pkg.dev/searce-playground-v1/testing/demo-angular:tagversion
+        image: asia-south1-docker.pkg.dev/flawless-helper-376817/testing/demo-angular:tagversion
         imagePullPolicy: Always
         ports:
         - containerPort: 4200
