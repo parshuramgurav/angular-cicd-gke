@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-moglix-deployment
+  name: test-deployment
 spec:
   replicas: 2
   selector:
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:tagversion
+        image: asia-south1-docker.pkg.dev/searce-playground-v1/testing/demo-angular:tagversion
         imagePullPolicy: Always
         ports:
         - containerPort: 4200
