@@ -1,23 +1,15 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'seismic-mantis-376309'
-                CLUSTER_NAME = 'monitoring-cluster'
+        PROJECT_ID = 'searce-playground-v1'
+                CLUSTER_NAME = 'moglix-test-cluster'
                 LOCATION = 'asia-south1-a'
                 REGION = 'asia-south1'
-                REPONAME = 'jenkinscicd'
-                CREDENTIALS_ID = 'wif-config-file'
+                REPONAME = 'moglix-test'
+                CREDENTIALS_ID = 'kubernetes'
     }
     
     stages {
-
-        stage("Generating OIDC token and saving it to a file") {
-            steps {
-                script {
-                        sh (script: 'sudo gcloud auth print-identity-token serviceaccounttoken@seismic-mantis-376309.iam.gserviceaccount.com  --audiences="//iam.googleapis.com/projects/27633948451/locations/global/workloadIdentityPools/jenkinsid"  > /usr/share/token/key',returnStdout: true)
-                }
-            }
-        }
         stage('Checkout') {
             steps {
                 checkout scm
@@ -34,8 +26,7 @@ pipeline {
         stage('Push auth and image') {
             steps {
                  sh 'gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet'
-                 sh 'gcloud config set project seismic-mantis-376309'
-                 sh 'docker push asia-south1-docker.pkg.dev/$PROJECT_ID/$REPONAME/demo-angular:$BUILD_ID' 
+                 sh 'docker push asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:$BUILD_ID' 
                                  
             }
         }
@@ -45,21 +36,9 @@ pipeline {
                 sh 'ls -ltr'
                 sh 'pwd'
                 sh "sed -i 's/tagversion/$BUILD_ID/g' deployment.yml"
-               
+                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
-        }
-        stage ("getting the WIF config file into a variable")
-        {
-            steps {
-                     withCredentials([file(credentialsId: 'wif-config-file', variable: 'WIF')]) 
-                        {
-                         sh '''
-                            gcloud auth login --brief --cred-file=$WIF --quiet
-                            gcloud container clusters list
-                            '''
 
-                        }
-                }
-        }    
+        }
     }
 }
