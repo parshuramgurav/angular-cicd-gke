@@ -5,40 +5,39 @@ pipeline {
                 CLUSTER_NAME = 'moglix-test-cluster'
                 LOCATION = 'asia-south1-a'
                 REGION = 'asia-south1'
-                REPONAME = 'moglix-test'
-                CREDENTIALS_ID = 'kubernetes'
+                REPONAME = 'testing'
+                CREDENTIALS_ID = 'wif'
     }
     
     stages {
+        stage("Generating OIDC token and saving it to a file") {
+            steps {
+                script {
+                        sh (script: 'sudo gcloud auth print-identity-token first-service-account@flawless-helper-376817.iam.gserviceaccount.com  --audiences="//iam.googleapis.com/projects/1048415450475/locations/global/workloadIdentityPools/jenkins/providers/jenkins"  > /usr/share/token/key/credential.key',returnStdout: true)
+                }
+            }
+        }
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        stage('Build image') {
+        stage ("getting the WIF config file into a variable"){
             steps {
-                sh '''
-                    whoami
-                    sudo docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPONAME/demo-angular:$BUILD_ID .
-                '''
-            }
-        }
-        stage('Push auth and image') {
-            steps {
-                 sh 'gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet'
-                 sh 'docker push asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:$BUILD_ID' 
-                                 
-            }
-        }
-        stage('Deploy to K8s') {
-            steps{
-                echo "Deployment started ..."
-                sh 'ls -ltr'
-                sh 'pwd'
-                sh "sed -i 's/tagversion/$BUILD_ID/g' deployment.yml"
-                step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
-            }
+                     withCredentials([file(credentialsId: 'wif', variable: 'WIF')]) 
+                        {
+                         sh '''
+                            gcloud auth login --brief --cred-file=$WIF --quiet
+                            gcloud compute instances list
+                            whoami
+                            sudo docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPONAME/demo-angular:$BUILD_ID .
+                            gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet
+                            docker push asia-south1-docker.pkg.dev/searce-playground-v1/moglix-test/demo-angular:$BUILD_ID
+                            '''
 
+                        }
+                }
         }
+
     }
 }
