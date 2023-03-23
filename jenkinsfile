@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'searce-playground-v1'
+        PROJECT_ID = 'flawless-helper-376817'
                 CLUSTER_NAME = 'testing'
                 LOCATION = 'asia-south1-a'
                 REGION = 'asia-south1'
