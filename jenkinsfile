@@ -26,7 +26,7 @@ pipeline {
         stage('Push auth and image') {
             steps {
                  sh 'gcloud auth configure-docker     asia-south1-docker.pkg.dev --quiet'
-                 sh 'docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPONAME}/metadata:${env.BUILD_ID}' 
+                 sh 'docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPONAME}/metadata:${BUILD_ID}' 
                                  
             }
         }
