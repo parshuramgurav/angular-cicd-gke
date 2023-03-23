@@ -29,5 +29,6 @@ pipeline {
                  sh 'docker push ${REGION}-docker.pkg.dev/${PROJECT_ID}/${REPONAME}/metadata:${env.BUILD_ID}' 
                                  
             }
-        }    
+        }
+      }  
 }
