@@ -21,9 +21,7 @@ pipeline {
         }
         stage('Image Parameter') {
             steps {
-                sh '''
-                    echo Hello ${params.PERSON}
-                '''
+                sh "echo Hello ${params.PERSON}"
             }
         }
 
