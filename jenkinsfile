@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    parameters {
+        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+        // string(name: 'PARAM2', description: 'Param 2?')
+    }
     environment {
         PROJECT_ID = 'flawless-helper-376817'
                 CLUSTER_NAME = 'testing'
@@ -15,9 +19,19 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Image Parameter') {
+            steps {
+                sh '''
+                    echo Hello ${params.PERSON}
+                '''
+            }
+        }
+
+
         stage('Build image') {
             steps {
                 sh '''
+                    echo "${params}"
                     docker build -t $REGION-docker.pkg.dev/$PROJECT_ID/$REPONAME/metadata:$BUILD_ID .
                 '''
             }
@@ -30,5 +44,5 @@ pipeline {
                                  
             }
         }
-      }  
+    }    
 }
